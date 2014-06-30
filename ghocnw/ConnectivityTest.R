@@ -1,4 +1,4 @@
-tdConnString <- "DRIVER=Teradata;DBCNAME=192.168.39.130;DATABASE=RevoTestDB;UID=markmo;PWD=markmo;"
+tdConnString <- "DRIVER=Teradata;DBCNAME=54.86.41.115;DATABASE=RevoTestDB;UID=revo;PWD=revo;"
 tdQuery <- "SELECT * FROM RevoTestDB.ccFraud10"
 teradataDS <- RxTeradata(connectionString=tdConnString, sqlQuery=tdQuery, rowsPerHead=50000)
 rxGetVarInfo(data=teradataDS)
@@ -25,19 +25,19 @@ teradataDS <- RxTeradata(connectionString=tdConnString,
 sqlQuery=tdQuery, colInfo=ccColInfo, rowsPerHead=50000)
 rxGetVarInfo(data=teradataDS)
 
-tdShareDir <- paste("c:\\AllShare\\", Sys.getenv("USERNAME"), sep="")
+tdShareDir <- paste("D:\\Users\\revo\\Documents\\AllShare\\", Sys.getenv("USERNAME"), sep="")
 tdRemoteShareDir <- "/tmp/revoJobs"
 tdRevoPath <- "/usr/lib64/Revo-7.1/R-3.0.2/lib64/R"
 dir.create(tdShareDir, recursive = TRUE)
 tdWait <- TRUE
 tdConsoleOutput <- FALSE
 tdCompute <- RxInTeradata(
-connectionString=tdConnString,
-shareDir=tdShareDir,
-remoteShareDir=tdRemoteShareDir,
-revoPath=tdRevoPath,
-wait=tdWait,
-consoleOutput=tdConsoleOutput)
+	connectionString=tdConnString,
+	shareDir=tdShareDir,
+	remoteShareDir=tdRemoteShareDir,
+	revoPath=tdRevoPath,
+	wait=tdWait,
+	consoleOutput=tdConsoleOutput)
 
 rxGetNodeInfo(tdCompute)
 
