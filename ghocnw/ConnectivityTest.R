@@ -1,4 +1,8 @@
-tdConnString <- "DRIVER=Teradata;DBCNAME=54.86.41.115;DATABASE=RevoTestDB;UID=revo;PWD=revo;"
+library(yaml)
+
+config = yaml.load_file("./conf/conf.yml")
+
+tdConnString <- paste("DRIVER=Teradata;DBCNAME=", config$db$host, ";DATABASE=", config$db$name, ";UID=", config$db$user, ";PWD=", config$db$pass, ";", sep="")
 tdQuery <- "SELECT * FROM RevoTestDB.ccFraud10"
 teradataDS <- RxTeradata(connectionString=tdConnString, sqlQuery=tdQuery, rowsPerHead=50000)
 rxGetVarInfo(data=teradataDS)
@@ -25,7 +29,7 @@ teradataDS <- RxTeradata(connectionString=tdConnString,
 sqlQuery=tdQuery, colInfo=ccColInfo, rowsPerHead=50000)
 rxGetVarInfo(data=teradataDS)
 
-tdShareDir <- paste("D:\\Users\\revo\\Documents\\AllShare\\", Sys.getenv("USERNAME"), sep="")
+tdShareDir <- paste(config$env$sharedir, Sys.getenv("USERNAME"), sep="")
 tdRemoteShareDir <- "/tmp/revoJobs"
 tdRevoPath <- "/usr/lib64/Revo-7.1/R-3.0.2/lib64/R"
 dir.create(tdShareDir, recursive = TRUE)
